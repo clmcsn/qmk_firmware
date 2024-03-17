@@ -16,12 +16,7 @@
 
 #include QMK_KEYBOARD_H
 
-enum torn_layers { _QWERTY, _SYST, _SYMB, _MOUS, _ITAL, _NUMB, _CURS};
-
-#define S_BSPC LSFT_T(KC_BSPC)
-#define R_DEL LT(_RAISE, KC_DEL)
-#define G_ENT LGUI_T(KC_ENT)
-#define L_SPC LT(_LOWER, KC_SPC)
+enum torn_layers { _QWERTY, _SYST, _SYMB, _NUMB};
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -82,56 +77,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_AT,   KC_LT,        KC_BSLS,          KC_MINS,          KC_GT,          KC_SLSH,     /**/             KC_BSLS,          KC_LBRC,          KC_RBRC,       KC_PLUS,    KC_AMPR, LSFT(KC_TAB),
                               KC_DOT,          KC_PERC,        KC_COLN,          KC_SCLN,     /**/             _______,          _______,          _______,       _______,
 ),
-/* Raise
+/* System
  * ,-----------------------------------------.    ,-----------------------------------------.
- * |      |  F1  |  F2  |  F3  |  F4  |  F5  |    |      |   &  |   *  |   (  |   )  |      |
+ * |  F13 |  F10 |  F9  |  F8  |  F7  | PgUP |    |  End |  <<  |      |  >>  |      |      |
  * |------+------+------+------+------+------|    |------+------+------+------+------+------|
- * |      |  F6  |  F7  |  F8  |  F9  |  F10 |    | Home | Left | Down | Right| End  | PgUp |
+ * |  F14 |  F11 |  F6  |  F5  |  F4  | Home |    | MSTP |  <<  | |>|| |  >>  |      |      |
  * |------+------+------+------+------+------|    |------+------+------+------+------+------|
- * |      |  F11 |  F12 |      |      |      |    |      |      |      |      |      | PgDn |
+ * |  F15 |  F12 |  F3  |  F2  |  F1  | PgDW |    | Left | Down |  Up  | Right|      |      |
  * |------+------+------+------+------+------|    |------+------+------+------+------+------|
- *               | ____ | Ctrl | Bksp | Del  |    |Enter |Space | Alt  | ____ |
- *               |      |      |Shift |Raise |    | Gui  |Lower |      |      |
+ *               | xxxx | ____ | ____ | ____ |    | VOL+ | MUTE | VOL- |      |
+ *               |      |      |      |      |    |      |      |      |      |
  *               `---------------------------'    `---------------------------'
  */
-[_RAISE] = LAYOUT_split_3x6_4(
-    _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,     _______, S(A(KC_LEFT)), KC_UP, S(A(KC_RGHT)), _______, _______,
-    _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,    KC_HOME, KC_LEFT, KC_DOWN, KC_RGHT, KC_END,  KC_PGUP,
-    _______, KC_F11,  KC_F12,  _______, _______, _______,   A(KC_BSPC), A(KC_LEFT), S(KC_DOWN), A(KC_RGHT), _______, KC_PGDN ,
-                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
-),
-
-/* Adjust (Lower + Raise)
- * ,-----------------------------------------.    ,-----------------------------------------.
- * |      |      |      |      |      |      |    |      |      |      |      |      |      |
- * |------+------+------+------+------+------|    |------+------+------+------+------+------|
- * |      |      |      |      |      |      |    |      |      |      |      |      |      |
- * |------+------+------+------+------+------|    |------+------+------+------+------+------|
- * |      |      |      |      |      |      |    |      |      |      |      |      |      |
- * |------+------+------+------+------+------|    |------+------+------+------+------+------|
- *               | ____ | Ctrl | Bksp | Del  |    |Enter |Space | Alt  | ____ |
- *               |      |      |Shift |Raise |    | Gui  |Lower |      |      |
- *               `---------------------------'    `---------------------------'
- */
-[_ADJUST] = LAYOUT_split_3x6_4(
-    _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______,
-                      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
+[_SYST] = LAYOUT_split_3x6_4(
+     KC_F13,  KC_F10,          KC_F9,  LGUI_T(KC_F8),         KC_F7,          KC_PGUP,     /**/             KC_END , KC_MPRV, _______, KC_MNXT, _______, _______,
+     KC_F14,  KC_F11,  LALT_T(KC_F6),  LCTL_T(KC_F5), LSFT_T(KC_F4),          KC_HOME,     /**/             KC_MSTP, KC_MRWD, KC_MPLY, KC_MFFD, _______, _______,
+     KC_F15,  KC_F12,          KC_F3,          KC_F2,         KC_F1,          KC_PGDN,     /**/             KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, _______, _______,
+                              ______,        _______,       _______,          _______,     /**/             KC_VOLU, KC_MUTE, KC_VOLD, _______,
 )
 
 };
 
 const uint16_t PROGMEM encoder_keymaps[][2][2] = {
-    [_QWERTY] =  { { C(S(KC_TAB)), C(KC_TAB) },     { KC_PGDN,      KC_PGUP } },
-    [_LOWER]  =  { { C(KC_LEFT),   C(KC_RGHT) },    { KC_VOLD,      KC_VOLU } },
-    [_RAISE]  =  { { KC_TRNS,      KC_TRNS },       { G(KC_TAB),    G(S(KC_TAB)) } },
-    [_ADJUST] =  { { KC_TRNS,      KC_TRNS },       { KC_TRNS,      KC_TRNS } },
+    [_QWERTY]   =  { { C(S(KC_TAB)), C(KC_TAB) },     { KC_PGDN,      KC_PGUP } },
+    [_SYST]     =  { { C(KC_LEFT),   C(KC_RGHT) },    { KC_VOLD,      KC_VOLU } },
+    [_SYMB]     =  { { KC_TRNS,      KC_TRNS },       { G(KC_TAB),    G(S(KC_TAB)) } },
+    [_NUMB]     =  { { KC_TRNS,      KC_TRNS },       { KC_TRNS,      KC_TRNS } },
 };
 // clang-format on
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    torn_set_led(0, IS_LAYER_ON_STATE(state, _RAISE));
-    torn_set_led(1, IS_LAYER_ON_STATE(state, _LOWER));
+    torn_set_led(0, IS_LAYER_ON_STATE(state, _SYST));
+    torn_set_led(1, IS_LAYER_ON_STATE(state, _NUMB));
     return state;
 }
