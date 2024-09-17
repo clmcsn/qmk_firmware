@@ -21,6 +21,13 @@ enum torn_layers { _QWERTY, _SYST, _SYMB, _NUMB};
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
+//TODO
+//arrow
+//round brackets
+//caps lock
+//dollar, @, etc
+//make json
+
 /* Qwerty
  * ,-----------------------------------------.    ,-----------------------------------------.
  * |  `   |   Q  |   W  |LGT(E)|   R  |   T  |    |   Y  |   U  |RGT(I)|   O  |   P  |  [   |
