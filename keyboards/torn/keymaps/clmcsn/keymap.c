@@ -16,7 +16,7 @@
 
 #include QMK_KEYBOARD_H
 
-enum torn_layers { _QWERTY, _SYST, _SYMB, _NUMB};
+enum torn_layers { _QWERTY, _NUMB, _SYMB, _SYST};
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -114,7 +114,8 @@ const uint16_t PROGMEM encoder_keymaps[][2][2] = {
 // clang-format on
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    torn_set_led(0, IS_LAYER_ON_STATE(state, _SYST));
-    torn_set_led(1, IS_LAYER_ON_STATE(state, _NUMB));
+    torn_set_led(0, IS_LAYER_ON_STATE(state, _NUMB));
+    torn_set_led(1, IS_LAYER_ON_STATE(state, _SYMB));
+    torn_set_led(2, IS_LAYER_ON_STATE(state, _SYST));
     return state;
 }
